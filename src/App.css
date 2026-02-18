@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Paleta Profesional 'Slate' */
+  /* Paleta Profesional 'Slate' & 'Cyber' */
   --bg-app: #0f172a;       /* Fondo más oscuro */
   --bg-sidebar: #1e293b;   /* Sidebar azul grisáceo */
   --bg-panel: rgba(30, 41, 59, 0.95); /* Paneles sólidos */
@@ -100,7 +100,7 @@ body {
 .chat-info h4 { margin: 0; font-size: 14px; font-weight: 500; color: var(--text-main); }
 .chat-info small { color: var(--text-muted); font-size: 11px; }
 
-/* Botón Borrar (Restaurado) */
+/* Botón Borrar */
 .delete-btn {
   background: none; border: none; font-size: 16px;
   cursor: pointer; color: var(--text-muted);
@@ -109,23 +109,22 @@ body {
 .chat-item:hover .delete-btn { opacity: 1; }
 .delete-btn:hover { color: var(--danger); transform: scale(1.1); }
 
-/* 1. Asegurar que la ventana del chat nunca exceda el ancho disponible */
+/* --- VENTANA PRINCIPAL --- */
 .chat-window {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-main);
   position: relative;
-  
-  /* 👇 ESTO ES CLAVE: */
-  overflow-x: hidden; /* Prohibido el scroll horizontal en el contenedor principal */
-  max-width: 100%;    /* Nunca más ancho que la pantalla */
+  overflow-x: hidden; 
+  max-width: 100%;    
 }
-/* Cabecera Optimizada (Sin Lag) */
+
+/* Cabecera */
 .chat-header {
   height: 70px; padding: 0 25px;
   display: flex; align-items: center; justify-content: space-between;
-  background-color: var(--bg-app); /* Sólido para rendimiento */
+  background-color: var(--bg-app); 
   border-bottom: var(--border);
   z-index: 10;
 }
@@ -138,11 +137,11 @@ body {
 
 .header-tools {
   display: flex;
-  gap: 12px; /* Más espacio entre botones */
+  gap: 12px;
   align-items: center;
 }
 
-/* 5. INPUTS DEL HEADER (Fecha y Búsqueda) */
+/* Inputs Header */
 .header-input {
   background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(148, 163, 184, 0.2);
@@ -153,104 +152,59 @@ body {
   font-size: 12px;
   font-family: 'Inter', sans-serif;
   transition: all 0.3s ease;
-  min-width: 140px; /* Un poco más anchos */
+  min-width: 140px; 
 }
 
 .header-input:focus { 
   border-color: var(--accent); 
   background: rgba(15, 23, 42, 1);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1); /* Anillo de enfoque */
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
 }
 
-/* --- CALENDARIO MEJORADO (Input Date) --- */
-
-/* Estilo base del input fecha */
+/* Input Date Mejorado */
 input[type="date"].header-input {
-  background: rgba(30, 41, 59, 0.6); /* Fondo semi-transparente */
-  border: 1px solid rgba(56, 189, 248, 0.3); /* Borde azul sutil */
+  background: rgba(30, 41, 59, 0.6); 
+  border: 1px solid rgba(56, 189, 248, 0.3); 
   border-radius: 8px;
   color: white;
-  
-  /* Esto activa el calendario oscuro nativo de Chrome/Edge */
   color-scheme: dark; 
-  
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  
-  /* Ajuste de tamaño para que se lea bien la fecha */
   padding: 8px 12px;
-  min-width: 120px; /* Ancho suficiente para que no se corte el texto */
-  height: 20px;     /* Misma altura que los botones */
-  
+  min-width: 120px;
+  height: 20px;    
   cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-  
-  /* Alineación */
-  display: flex;
-  align-items: center;
+  display: flex; align-items: center;
 }
-
-/* Efecto al pasar el mouse */
 input[type="date"].header-input:hover {
   background: rgba(56, 189, 248, 0.1);
   border-color: var(--accent);
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
 }
-
-/* Efecto al hacer clic */
-input[type="date"].header-input:focus {
-  background: #0f172a;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
-}
-
-/* PERSONALIZAR EL ÍCONO DEL CALENDARIO (La parte mágica) */
 ::-webkit-calendar-picker-indicator {
-  /* Hacemos que el icono sea blanco y un poco más grande */
   filter: invert(1) brightness(1.2); 
-  cursor: pointer;
-  opacity: 0.7;
-  transition: 0.2s;
-  width: 18px;
-  height: 18px;
+  cursor: pointer; opacity: 0.7; transition: 0.2s;
+  width: 18px; height: 18px;
 }
+::-webkit-calendar-picker-indicator:hover { opacity: 1; transform: scale(1.1); }
 
-::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-  transform: scale(1.1); /* Pequeño zoom al icono */
-}
-
-/* 1. ESTILO BASE PARA TODOS LOS BOTONES */
+/* Botones Header */
 .header-btn {
   position: relative;
-  background: rgba(30, 41, 59, 0.6); /* Fondo semi-transparente oscuro */
+  background: rgba(30, 41, 59, 0.6); 
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-muted);
-  padding: 8px 16px; /* Más grandes y cómodos */
+  padding: 8px 16px; 
   border-radius: 8px;
   cursor: pointer;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase; /* Estilo técnico */
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animación suave */
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(4px);
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-/* Efecto de clic (presión) */
-.header-btn:active {
-  transform: scale(0.96);
-}
-
-/* Efecto de brillo al pasar el mouse (generico) */
+.header-btn:active { transform: scale(0.96); }
 .header-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: white;
@@ -258,7 +212,6 @@ input[type="date"].header-input:focus {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
-/* 2. BOTONES PRIMARIOS (Galería, Info, Día) - AZUL CYBER */
 .btn-primary { 
   border-color: rgba(56, 189, 248, 0.3);
   color: var(--accent);
@@ -267,72 +220,65 @@ input[type="date"].header-input:focus {
   background: rgba(56, 189, 248, 0.15); 
   border-color: var(--accent);
   color: #fff;
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); /* Glow azul */
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); 
 }
 
-/* 4. BOTÓN EVIDENCIA (TOGGLE) - DORADO */
-/* Estado inactivo (pero especial) */
-.btn-primary svg {
-  transition: transform 0.3s ease;
+.btn-primary svg { transition: transform 0.3s ease; }
+.btn-primary:hover svg { transform: rotate(15deg) scale(1.1); }
+
+/* Botón Reporte */
+.btn-pdf { 
+  border-color: rgba(244, 63, 94, 0.4); 
+  color: #fb7185;
 }
-.btn-primary:hover svg {
-  transform: rotate(15deg) scale(1.1); /* Ícono se mueve al pasar mouse */
+.btn-pdf:hover { 
+  background: rgba(244, 63, 94, 0.15); 
+  border-color: #f43f5e;
+  color: white;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.3); 
 }
 
-/* --- BOTONES DE ACCIÓN (MODAL DE IMPRESIÓN) --- */
+/* Toggle Activo */
+.btn-filter-active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: white !important;
+  border: 1px solid #fcd34d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.4) !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.btn-filter-active svg { fill: white !important; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
 
+/* --- BOTONES DE ACCIÓN (MODAL) --- */
 .btn-action {
   width: 100%;
-  display: flex;
-  flex-direction: column; /* Texto arriba, subtítulo abajo */
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  
-  padding: 18px 20px !important; /* Más grandes */
-  margin-bottom: 8px;
-  
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding: 18px 20px !important; margin-bottom: 8px;
   background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8)) !important;
   border: 1px solid rgba(148, 163, 184, 0.15) !important;
-  border-left: 4px solid transparent !important; /* Borde decorativo a la izquierda */
-  
+  border-left: 4px solid transparent !important;
   border-radius: 12px !important;
   color: var(--text-main) !important;
-  
-  font-size: 14px !important;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  
+  font-size: 14px !important; text-transform: uppercase; letter-spacing: 1px;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
 }
+.btn-action span { font-size: 10px !important; text-transform: none; opacity: 0.7; font-weight: 400; letter-spacing: 0; }
+.btn-action:active { transform: scale(0.98) translateY(0); filter: brightness(0.9); }
 
-/* Subtítulo (el texto pequeño) */
-.btn-action span {
-  font-size: 10px !important;
-  text-transform: none;
-  opacity: 0.7;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-/* --- VARIANTES POR COLOR (Identidad Visual) --- */
-
-/* 1. AZUL (Vista Actual) */
-.btn-action[style*="background: #3b82f6"] {
+/* Variantes */
+.btn-action[style*="background: #3b82f6"], .btn-action[style*="color: #38bdf8"] {
   background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(15, 23, 42, 0.6)) !important;
   border-color: rgba(59, 130, 246, 0.3) !important;
-  border-left-color: #3b82f6 !important; /* Borde izquierdo azul brillante */
+  border-left-color: #3b82f6 !important;
 }
-.btn-action[style*="background: #3b82f6"]:hover {
+.btn-action[style*="background: #3b82f6"]:hover, .btn-action[style*="color: #38bdf8"]:hover {
   background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(15, 23, 42, 0.8)) !important;
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
   transform: translateY(-2px);
 }
 
-/* 2. GRIS (Todo el Historial) */
 .btn-action[style*="background: #334155"] {
   background: linear-gradient(90deg, rgba(71, 85, 105, 0.1), rgba(15, 23, 42, 0.6)) !important;
   border-color: rgba(148, 163, 184, 0.2) !important;
@@ -344,68 +290,25 @@ input[type="date"].header-input:focus {
   transform: translateY(-2px);
 }
 
-/* 3. AMARILLO (Solo Evidencia) */
-.btn-action[style*="color: black"] { /* Detectamos el de evidencia */
+.btn-action[style*="color: black"], .btn-action[style*="color: #eab308"] {
   background: linear-gradient(90deg, rgba(234, 179, 8, 0.15), rgba(15, 23, 42, 0.6)) !important;
   border-color: rgba(234, 179, 8, 0.4) !important;
   border-left-color: #eab308 !important;
-  color: #eab308 !important; /* Texto dorado en vez de negro para que se lea mejor en oscuro */
+  color: #eab308 !important;
 }
-.btn-action[style*="color: black"] span {
-  color: rgba(255, 255, 255, 0.6); /* Subtítulo claro */
-}
-.btn-action[style*="color: black"]:hover {
+.btn-action[style*="color: black"]:hover, .btn-action[style*="color: #eab308"]:hover {
   background: linear-gradient(90deg, rgba(234, 179, 8, 0.25), rgba(15, 23, 42, 0.8)) !important;
   box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
   transform: translateY(-2px);
 }
 
-/* Efecto de clic para todos */
-.btn-action:active {
-  transform: scale(0.98) translateY(0);
-  filter: brightness(0.9);
-}
-/* 3. BOTÓN REPORTE - ROJO/ROSA ALERTA */
-.btn-pdf { 
-  border-color: rgba(244, 63, 94, 0.4); 
-  color: #fb7185;
-}
-
-.btn-pdf:hover { 
-  background: rgba(244, 63, 94, 0.15); 
-  border-color: #f43f5e;
-  color: white;
-  box-shadow: 0 0 20px rgba(244, 63, 94, 0.3); /* Glow rojo */
-}
-
-/* Estado ACTIVO (El botón se "prende") */
-.btn-filter-active {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  color: white !important;
-  border: 1px solid #fcd34d !important;
-  font-weight: 700 !important;
-  box-shadow: 0 0 25px rgba(245, 158, 11, 0.4) !important; /* Glow intenso dorado */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-
-.btn-filter-active svg {
-  fill: white !important;
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
-}
-
-/* 2. El área de mensajes tampoco puede ensancharse */
+/* --- MENSAJES --- */
 .messages-area {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden; /* IMPORTANTE: Oculta desbordamientos laterales */
+  overflow-y: auto; overflow-x: hidden;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  
-  /* 👇 Asegura que los hijos no estiren el padre */
-  width: 100%; 
-  box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 15px;
+  width: 100%; box-sizing: border-box;
 }
 
 .date-separator {
@@ -435,25 +338,7 @@ input[type="date"].header-input:focus {
 .msg-sender { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
 .msg-time { font-size: 10px; opacity: 0.7; float: right; margin: 5px 0 0 8px; }
 
-/* 🔥 HIGHLIGHT RESTAURADO (Y MEJORADO) 🔥 */
-.highlight {
-  background-color: var(--highlight);
-  color: black;
-  padding: 0 4px;
-  border-radius: 4px;
-  font-weight: 800;
-  border: 1px solid white;
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
-  animation: popHighlight 0.3s ease-out;
-}
-
-@keyframes popHighlight {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-/* Evidencia */
+/* Evidencia & Highlight */
 .evidence-flag {
   position: absolute; top: -8px; right: -8px;
   background: var(--bg-sidebar); color: var(--text-muted);
@@ -469,6 +354,14 @@ input[type="date"].header-input:focus {
   border: 2px solid var(--gold) !important;
   background: rgba(250, 204, 21, 0.15) !important;
 }
+
+.highlight {
+  background-color: var(--highlight);
+  color: black; padding: 0 4px; border-radius: 4px; font-weight: 800;
+  border: 1px solid white; box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+  animation: popHighlight 0.3s ease-out;
+}
+@keyframes popHighlight { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
 /* Multimedia */
 .chat-image { border-radius: 8px; max-width: 100%; border: 1px solid rgba(255,255,255,0.1); }
@@ -493,18 +386,13 @@ input[type="date"].header-input:focus {
   display: flex; flex-direction: column;
 }
 .gallery-header { padding: 20px; background: #0f172a; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-.gallery-tabs { display: flex; background: #1e293b; border-bottom: 1px solid #334155; }
-.tab-btn { flex: 1; padding: 15px; background: none; border: none; color: var(--text-muted); cursor: pointer; }
-.tab-btn.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
 .gallery-body { padding: 20px; overflow-y: auto; background: #0f172a; flex: 1; }
 
 .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
-.media-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #334155; }
 
-/* GRÁFICOS (Restaurados) */
+/* Gráficos */
 .stat-section { margin-bottom: 30px; padding: 0 20px; }
 .stat-section h3 { color: var(--accent); font-size: 14px; text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
-
 .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
 .chart-label { width: 150px; font-size: 13px; text-align: right; padding-right: 15px; color: var(--text-muted); }
 .chart-bar-container { flex: 1; background-color: rgba(255,255,255,0.05); border-radius: 4px; height: 10px; overflow: hidden; }
@@ -515,399 +403,140 @@ input[type="date"].header-input:focus {
 .hour-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; position: relative; cursor: pointer; }
 .hour-bar { width: 100%; background-color: var(--accent); opacity: 0.6; border-top-left-radius: 3px; border-top-right-radius: 3px; min-height: 2px; transition: height 0.5s; }
 .hour-col:hover .hour-bar { opacity: 1; background-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
-.hour-label { font-size: 10px; text-align: center; margin-top: 6px; color: var(--text-muted); }
 
-/* --- ESTILOS DE IMPRESIÓN (FORMATO WHATSAPP CON ETIQUETAS EXTERNAS) --- */
+/* --- PANTALLA DE BIENVENIDA --- */
+.welcome-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; text-align: center; color: var(--text-main);
+  animation: fadeIn 0.8s ease-out;
+}
+.welcome-title {
+  font-size: 36px; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -1px;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.welcome-subtitle { font-size: 16px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 15px; opacity: 0.8; }
+.welcome-text { color: var(--text-muted); font-size: 15px; max-width: 420px; line-height: 1.6; }
+
+/* --- CARPETAS --- */
+.folders-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+.folder-card {
+  background: transparent !important; border: none !important;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  cursor: pointer; transition: transform 0.2s, background 0.2s; padding: 10px 5px;
+  border-radius: 8px; position: relative; height: auto; min-height: 90px;
+}
+.folder-card:hover { background: rgba(255, 255, 255, 0.05) !important; transform: translateY(-2px); }
+
+.folder-tab-visual {
+  width: 55px; height: 40px; margin-top: 10px; margin-bottom: 8px;
+  border-radius: 0 6px 6px 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative;
+}
+.folder-tab-visual::before {
+  content: ''; position: absolute; top: -8px; left: 0; width: 25px; height: 10px;
+  background-color: inherit; filter: brightness(0.9); border-radius: 6px 6px 0 0;
+}
+.folder-tab-visual::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 0 6px 6px 6px; border: 1px solid rgba(255,255,255,0.15); pointer-events: none;
+}
+.folder-name {
+  font-size: 11px; font-weight: 500; text-align: center; color: var(--text-main); line-height: 1.3; width: 100%;
+  overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.folder-count { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+
+/* Botón Crear Carpeta */
+.folder-card[style*="dashed"] { border: 2px dashed rgba(56, 189, 248, 0.3) !important; justify-content: center; min-height: 80px; }
+.folder-card[style*="dashed"]:hover { border-color: var(--accent) !important; background: rgba(56, 189, 248, 0.05) !important; }
+
+/* Botón Borrar Carpeta */
+.folder-card button {
+  position: absolute; top: 4px; right: 4px;
+  background: rgba(15, 23, 42, 0.8) !important; backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important; color: rgba(255, 255, 255, 0.7) !important;
+  width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; padding: 0; opacity: 0; transform: scale(0.8); transition: all 0.3s; z-index: 20;
+}
+.folder-card:hover button { opacity: 1; transform: scale(1); }
+.folder-card button:hover {
+  background: rgba(239, 68, 68, 0.9) !important; border-color: #ef4444 !important;
+  color: white !important; transform: scale(1.1) rotate(90deg) !important;
+}
+
+.back-folder-btn {
+  display: flex; align-items: center; gap: 8px; width: 100%; padding: 10px 15px;
+  background: rgba(15, 23, 42, 0.8); border: none; border-bottom: 1px solid var(--border);
+  color: var(--accent); cursor: pointer; font-weight: 600; font-size: 12px; transition: background 0.2s;
+}
+.back-folder-btn:hover { background: rgba(56, 189, 248, 0.1); }
+
+/* --- ESTILOS DE IMPRESIÓN (FORENSE) --- */
 @media print {
-  /* 1. Limpieza de interfaz */
-  .sidebar, .header-tools, .evidence-flag, .scroll-btn, .modal-overlay, button, input, ::-webkit-scrollbar { 
-    display: none !important; 
-  }
-
-  /* 2. Configuración A4 */
+  .sidebar, .header-tools, .evidence-flag, .scroll-btn, .modal-overlay, button, input, ::-webkit-scrollbar { display: none !important; }
   @page { margin: 1.5cm; size: A4; }
-
+  
   body, #root, .app-container {
-    background: white !important;
-    font-family: Helvetica, Arial, sans-serif !important;
-    width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-    overflow: visible !important;
+    background: white !important; font-family: Helvetica, Arial, sans-serif !important;
+    width: 100% !important; height: auto !important; margin: 0 !important; overflow: visible !important;
   }
-
-  /* 3. Encabezado Legal */
+  
   .chat-header {
-    display: block !important;
-    border-bottom: 2px solid #333 !important;
-    margin-bottom: 25px !important;
-    padding-bottom: 10px !important;
-    text-align: left;
+    display: block !important; border-bottom: 2px solid #333 !important; margin-bottom: 25px !important; padding-bottom: 10px !important; text-align: left;
   }
   .chat-header h4 { font-size: 20px !important; text-transform: uppercase; color: black !important; margin: 0; }
   .chat-header small { display: none !important; }
-  .chat-header::after {
-    content: "REPORTE DE SECUENCIA DE CHAT - VISTA CRONOLÓGICA";
-    display: block; font-size: 10px; color: #666; margin-top: 5px; font-weight: bold; letter-spacing: 1px;
-  }
+  .chat-header::after { content: "REPORTE DE SECUENCIA DE CHAT - VISTA CRONOLÓGICA"; display: block; font-size: 10px; color: #666; margin-top: 5px; font-weight: bold; letter-spacing: 1px; }
 
-  /* 4. CONTENEDOR FLEX */
   .messages-area {
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 0 10px !important;
-    width: 100% !important;
-
-    /* ESTO ARREGLA EL CORTE DERECHO: */
-    padding-right: 15px !important; 
-    padding-left: 5px !important;
-    box-sizing: border-box !important;
+    display: flex !important; flex-direction: column !important; padding: 0 10px !important; width: 100% !important;
+    padding-right: 15px !important; padding-left: 5px !important; box-sizing: border-box !important;
   }
 
-  /* 5. BURBUJAS DE CHAT */
   .message-bubble {
-    position: relative !important;
-    max-width: 65% !important;
-    width: fit-content !important;
-    padding: 8px 12px !important;
-    margin-bottom: 12px !important; /* Un poco más de espacio por si hay etiquetas */
-    border-radius: 12px !important;
-    box-shadow: none !important;
-    page-break-inside: avoid !important;
-    display: block !important;
-    font-size: 11px !important;
-    line-height: 1.4 !important;
+    position: relative !important; max-width: 65% !important; width: fit-content !important;
+    padding: 8px 12px !important; margin-bottom: 12px !important; border-radius: 12px !important;
+    box-shadow: none !important; page-break-inside: avoid !important; display: block !important;
+    font-size: 11px !important; line-height: 1.4 !important;
   }
 
-  /* --- MENSAJES ENVIADOS (DERECHA) --- */
   .message-bubble.sent {
-    align-self: flex-end !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    background-color: #effdd6 !important;
-    border: 1px solid #d4e8c0 !important;
-    color: black !important;
+    align-self: flex-end !important; margin-left: auto !important; margin-right: 0 !important;
+    background-color: #effdd6 !important; border: 1px solid #d4e8c0 !important; color: black !important;
     border-top-right-radius: 0 !important;
   }
-  
-  /* Nombre real del exportador (arriba del mensaje) */
   .message-bubble.sent::before {
-    content: attr(data-sender); 
-    display: block;
-    font-size: 8px;
-    font-weight: 900;
-    color: #4a6f2c;
-    margin-bottom: 4px;
-    text-transform: uppercase;
+    content: attr(data-sender); display: block; font-size: 8px; font-weight: 900; color: #4a6f2c; margin-bottom: 4px; text-transform: uppercase;
   }
 
-  /* --- MENSAJES RECIBIDOS (IZQUIERDA) --- */
   .message-bubble.received {
-    align-self: flex-start !important;
-    margin-right: auto !important;
-    background-color: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    color: black !important;
+    align-self: flex-start !important; margin-right: auto !important;
+    background-color: #ffffff !important; border: 1px solid #e2e8f0 !important; color: black !important;
     border-top-left-radius: 0 !important;
   }
 
-  /* Nombre del remitente */
-  .msg-sender {
-    display: block !important;
-    color: #e11d48 !important;
-    font-size: 9px !important;
-    font-weight: 900 !important;
-    text-transform: uppercase;
-    margin-bottom: 2px !important;
-  }
-
-/* --- 🌟 EVIDENCIA (SOLO EN EL TÍTULO) --- */
+  .msg-sender { display: block !important; color: #e11d48 !important; font-size: 9px !important; font-weight: 900 !important; text-transform: uppercase; margin-bottom: 2px !important; }
   
-  /* 1. La burbuja solo tiene borde negro para destacar, pero sin etiquetas raras */
-  .message-bubble.evidence {
-    border: 2px solid #000 !important;
-    background-color: #fff !important;
-  }
-
-  /* 2. AGREGAR LA MARCA AL LADO DEL NOMBRE (DONDE HICISTE EL CÍRCULO) */
+  .message-bubble.evidence { border: 2px solid #000 !important; background-color: #fff !important; }
   .message-bubble.evidence .msg-sender::after {
-    content: " ★ ";
-    color: black;
-    font-weight: 900;
-    font-size: 10px;
-    margin-left: 5px;
-    text-transform: uppercase;
-    background: #eab308; /* Fondo amarillo resaltador */
-    padding: 1px 4px;
-    border-radius: 4px;
+    content: " ★ "; color: black; font-weight: 900; font-size: 10px; margin-left: 5px; text-transform: uppercase;
+    background: #eab308; padding: 1px 4px; border-radius: 4px;
   }
-  
-  /* Caso especial: Mensajes MÍOS (que usan el truco del ::before) */
   .message-bubble.evidence.sent::before {
-    /* Agregamos el texto de evidencia al contenido generado automáticamente */
-    content: attr(data-sender) " ★ "; 
-    color: black;
-    font-weight: 900;
-    font-size: 8px;
-    margin-left: 0px;
-    text-transform: uppercase;
-    background: #eab308; /* Fondo amarillo resaltador */
-    padding: 1px 4px;
-    border-radius: 4px;
+    content: attr(data-sender) " ★ "; color: black; font-weight: 900; font-size: 8px; margin-left: 0px; text-transform: uppercase;
+    background: #eab308; padding: 1px 4px; border-radius: 4px;
   }
 
-  /* Fechas y Links */
   .msg-time { float: right; font-size: 8px; color: #888 !important; margin-left: 10px; margin-top: 3px; }
   a { text-decoration: underline; color: black !important; }
-  
   .date-separator {
-    align-self: center !important;
-    background: #f1f5f9 !important;
-    border: 1px solid #cbd5e1;
-    color: #475569 !important;
-    font-size: 10px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin: 15px 0;
-    page-break-after: avoid;
+    align-self: center !important; background: #f1f5f9 !important; border: 1px solid #cbd5e1;
+    color: #475569 !important; font-size: 10px; padding: 4px 12px; border-radius: 20px;
+    margin: 15px 0; page-break-after: avoid;
   }
-}
-/* --- FIX: FORZAR VISIBILIDAD DE ÍCONOS --- */
-.action-btn-icon svg {
-  width: 20px !important;
-  height: 20px !important;
-  display: block; /* Evita colapsos */
-  min-width: 20px; /* Seguridad extra */
-  min-height: 20px;
-}
-
-/* Asegurar que el botón reset rojo se vea rojo */
-.danger-icon svg {
-  stroke: #ef4444 !important; /* Rojo forzado */
-}
-/* --- PANTALLA DE BIENVENIDA (ESTILO HERO) --- */
-.welcome-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  text-align: center;
-  color: var(--text-main);
-  animation: fadeIn 0.8s ease-out;
-}
-
-.hero-icon {
-  color: var(--accent);
-  margin-bottom: 2rem;
-  /* ESTE ES EL EFECTO CLAVE: Sombra de luz de neón */
-  filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.6)); 
-  
-  /* Animación de flotar (ya la tenías, asegúrate que esté) */
-  animation: float 6s ease-in-out infinite;
-}
-
-.welcome-title {
-  font-size: 36px;
-  font-weight: 800;
-  margin: 0 0 10px 0;
-  letter-spacing: -1px;
-  /* Efecto de texto degradado (Blanco a Gris) */
-  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.welcome-subtitle {
-  font-size: 16px;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  opacity: 0.8;
-}
-
-.welcome-text {
-  color: var(--text-muted);
-  font-size: 15px;
-  max-width: 420px;
-  line-height: 1.6;
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); } /* Sube 15px */
-  100% { transform: translateY(0px); }
-}
-
-/* --- NUEVO DISEÑO: ÍCONOS DE CARPETA REALES --- */
-
-.folders-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 3 columnas para que parezcan iconos de escritorio */
-  gap: 15px;
-  padding: 15px;
-}
-
-/* 1. EL CONTENEDOR (Ya no es una tarjeta con borde, es transparente) */
-.folder-card {
-  background: transparent !important;
-  border: none !important; /* Quitamos bordes viejos */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-  padding: 10px 5px;
-  border-radius: 8px;
-  position: relative;
-  height: auto;
-  min-height: 90px;
-}
-
-.folder-card:hover {
-  background: rgba(255, 255, 255, 0.05) !important; /* Efecto hover tipo Windows/Mac */
-  transform: translateY(-2px);
-}
-
-/* 2. EL CUERPO DE LA CARPETA (La parte de color) */
-/* Usamos el div que ya tienes (.folder-tab-visual) para dibujar la carpeta entera */
-.folder-tab-visual {
-  width: 55px;         /* Ancho del icono */
-  height: 40px;        /* Alto del cuerpo */
-  margin-top: 10px;    /* Espacio para la pestaña */
-  margin-bottom: 8px;
-  
-  /* Forma de carpeta */
-  border-radius: 0 6px 6px 6px; 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  
-  position: relative;
-  /* El color de fondo viene del React (style={{background: f.color}}) */
-}
-/* 3. LA PESTAÑA DE LA CARPETA (TAB) */
-.folder-tab-visual::before {
-  content: '';
-  position: absolute;
-  top: -8px;           /* Subimos para hacer la pestaña */
-  left: 0;
-  width: 25px;         /* Ancho de la pestaña */
-  height: 10px;
-  
-  background-color: inherit; /* Hereda el mismo color que el cuerpo */
-  filter: brightness(0.9);   /* Un poquito más oscuro para dar profundidad */
-  
-  border-radius: 6px 6px 0 0; /* Redondeado arriba */
-}
-
-/* Efecto de borde suave blanco (opcional, para resaltar en fondo oscuro) */
-.folder-tab-visual::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 0 6px 6px 6px;
-  border: 1px solid rgba(255,255,255,0.15);
-  pointer-events: none;
-}
-
-/* 4. TEXTOS (Como icono de escritorio) */
-.folder-name {
-  font-size: 11px;
-  font-weight: 500;
-  text-align: center;
-  color: var(--text-main);
-  line-height: 1.3;
-  width: 100%;
-  
-  /* Cortar texto si es muy largo */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Máximo 2 líneas */
-  -webkit-box-orient: vertical;
-}
-
-.folder-count {
-  font-size: 9px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* 5. ARREGLO PARA EL BOTÓN "CREAR CARPETA" */
-/* Como usa estilos inline, le forzamos el borde dashed aquí */
-.folder-card[style*="dashed"] {
-  border: 2px dashed rgba(56, 189, 248, 0.3) !important;
-  justify-content: center;
-  min-height: 80px;
-}
-.folder-card[style*="dashed"]:hover {
-  border-color: var(--accent) !important;
-  background: rgba(56, 189, 248, 0.05) !important;
-}
-/* 6. BOTÓN DE BORRAR (MEJORADO - ESTILO TECH) */
-.folder-card button {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  
-  /* Diseño Base: Vidrio Oscuro */
-  background: rgba(15, 23, 42, 0.8) !important; /* Fondo oscuro translúcido */
-  backdrop-filter: blur(4px);                  /* Efecto borroso detrás */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: rgba(255, 255, 255, 0.7) !important;
-  
-  /* Forma y Tamaño */
-  width: 24px;
-  height: 24px;
-  border-radius: 8px; /* Un poco más cuadrado (tech), no 100% redondo */
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  padding: 0;
-  
-  /* Animación */
-  opacity: 0; /* Invisible hasta pasar el mouse sobre la carpeta */
-  transform: scale(0.8);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Rebote suave */
-  z-index: 20;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
-}
-
-/* Cuando pasas el mouse sobre la CARPETA, aparece el botón */
-.folder-card:hover button {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Cuando pasas el mouse sobre el BOTÓN mismo (Acción de borrar) */
-.folder-card button:hover {
-  background: rgba(239, 68, 68, 0.9) !important; /* Rojo Alerta */
-  border-color: #ef4444 !important;
-  color: white !important;
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); /* Resplandor Rojo */
-  transform: scale(1.1) rotate(90deg) !important; /* Gira y crece */
-}
-/* Botón de volver atrás (cuando entras a una carpeta) */
-.back-folder-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 15px;
-  background: rgba(15, 23, 42, 0.8);
-  border: none;
-  border-bottom: 1px solid var(--border);
-  color: var(--accent);
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 12px;
-  transition: background 0.2s;
-}
-.back-folder-btn:hover {
-  background: rgba(56, 189, 248, 0.1);
+  body::after {
+    content: "GENERADO CON EVIDENSTALK ENTERPRISE - INTEGRIDAD VERIFICADA";
+    position: fixed; bottom: 0; width: 100%; text-align: center;
+    font-size: 8px; color: #999; border-top: 1px solid #eee; padding: 5px;
+  }
 }

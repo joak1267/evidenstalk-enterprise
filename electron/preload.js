@@ -14,5 +14,17 @@ contextBridge.exposeInMainWorld('api', {
   deleteFolder: (id) => ipcRenderer.invoke('delete-folder', id),
   addChatToFolder: (args) => ipcRenderer.invoke('add-chat-to-folder', args),
   toggleEvidence: (id) => ipcRenderer.invoke('toggle-evidence', id),
-  transcribeAudio: (path) => ipcRenderer.invoke('transcribe-audio', path)
+  transcribeAudio: (path) => ipcRenderer.invoke('transcribe-audio', path),
+  // Licensing
+  getHWID: () => ipcRenderer.invoke('license-get-hwid'),
+  activateLicense: (key) => ipcRenderer.invoke('license-activate', { licenseKey: key }),
+  checkLicense: () => ipcRenderer.invoke('license-check-status'),
+  // Reportes
+  generateReport: (args) => ipcRenderer.invoke('generate-report', args),
+  // Admin Panel
+  getUsers: () => ipcRenderer.invoke('admin-get-users'),
+  deleteUser: (id) => ipcRenderer.invoke('admin-delete-user', id),
+  getAuditLogs: () => ipcRenderer.invoke('admin-get-logs'),
+  // Login
+  login: (creds) => ipcRenderer.invoke('auth-login', creds)
 });

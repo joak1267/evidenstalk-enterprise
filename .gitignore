@@ -1,24 +1,28 @@
-# Logs
+# --- LO QUE YA TENÍAS (MANTENER) ---
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
 node_modules
 dist
 dist-ssr
-*.local
-
-# Editor directories and files
 .vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# --- LO NUEVO PARA PROTECCIÓN Y ESPACIO ---
+# Carpetas pesadas de Electron (No se suben)
+dist-app/
+dist_electron/
+release/
+
+# Archivos de ejecución y empaquetado (No se suben)
+*.exe
+*.asar
+*.zip
+
+# --- PRIVACIDAD DE DATOS ---
+# Ignora la carpeta de datos y la base de datos específica
+data/whatsapp.db
+*.db
+*.sqlite
+database.sqlite
