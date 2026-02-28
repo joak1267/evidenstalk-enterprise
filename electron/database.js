@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// Ruta de la base de datos
+// Ruta de la base de datos (Ajustada para estar directamente en /electron)
 const dbPath = isDev 
   ? path.join(__dirname, '../data/whatsapp.db') 
   : path.join(app.getPath('userData'), 'whatsapp.db');
@@ -22,13 +22,18 @@ if (!fs.existsSync(dbFolder)) {
 const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');
 
+// ⚠️ IMPORTANTE: Activamos llaves foráneas para el borrado en cascada de subcarpetas
+db.pragma('foreign_keys = ON'); 
+
 // --- MIGRACIONES ---
 function runMigrations() {
   const columns = [
     { table: 'chats', col: 'source_hash TEXT', desc: 'Huella digital SHA-256' },
     { table: 'chats', col: 'file_size_bytes INTEGER', desc: 'Tamaño original' },
     { table: 'chats', col: 'imported_at TEXT', desc: 'Fecha importación' },
-    { table: 'messages', col: 'is_evidence INTEGER DEFAULT 0', desc: 'Flag evidencia' }
+    { table: 'messages', col: 'is_evidence INTEGER DEFAULT 0', desc: 'Flag evidencia' },
+    // 👇 NUEVA MIGRACIÓN: Agregamos soporte para subcarpetas en la base local
+    { table: 'folders', col: 'parent_id INTEGER DEFAULT NULL REFERENCES folders(id) ON DELETE CASCADE', desc: 'Subcarpetas' }
   ];
 
   columns.forEach(mig => {
@@ -46,8 +51,8 @@ function initDB() {
   // 2. MENSAJES
   db.exec(`CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, chat_id INTEGER, timestamp TEXT, sender_name TEXT, content_text TEXT, media_type TEXT DEFAULT 'text', local_media_path TEXT, is_evidence INTEGER DEFAULT 0, FOREIGN KEY(chat_id) REFERENCES chats(id))`);
 
-  // 3. CARPETAS
-  db.exec(`CREATE TABLE IF NOT EXISTS folders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, color TEXT DEFAULT '#3b82f6', created_at TEXT DEFAULT CURRENT_TIMESTAMP)`);
+  // 3. CARPETAS (Se actualiza la creación por si es una DB desde cero)
+  db.exec(`CREATE TABLE IF NOT EXISTS folders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, color TEXT DEFAULT '#3b82f6', parent_id INTEGER DEFAULT NULL REFERENCES folders(id) ON DELETE CASCADE, created_at TEXT DEFAULT CURRENT_TIMESTAMP)`);
 
   // 4. RELACIÓN
   db.exec(`CREATE TABLE IF NOT EXISTS chat_folder_rel (folder_id INTEGER, chat_id INTEGER, added_at TEXT DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (folder_id, chat_id), FOREIGN KEY(folder_id) REFERENCES folders(id) ON DELETE CASCADE, FOREIGN KEY(chat_id) REFERENCES chats(id) ON DELETE CASCADE)`);
@@ -85,7 +90,7 @@ function initDB() {
   db.exec(`CREATE INDEX IF NOT EXISTS idx_chat_timestamp ON messages(chat_id, timestamp)`);
   
   runMigrations();
-  console.log("✅ eVidensTalk Core: Base de datos v4.0 (Auth) lista.");
+  console.log("✅ eVidensTalk Core: Base de datos v4.0 (Auth + Subcarpetas) lista.");
 }
 
 initDB();

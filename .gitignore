@@ -26,3 +26,16 @@ data/whatsapp.db
 *.db
 *.sqlite
 database.sqlite
+
+# --- FALTANTES CLAVE DE SEGURIDAD Y BUILD ---
+dist-web/
+build/
+.env
+.env.local
+.env.*
+
+# --- TEMPORALES DE SQLITE ---
+data/*.db-shm
+data/*.db-wal
+*.db-shm
+*.db-wal

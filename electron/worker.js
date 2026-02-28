@@ -1,5 +1,4 @@
 const { parentPort, workerData } = require('worker_threads');
-const { pipeline } = require('@xenova/transformers');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const wavefile = require('wavefile');
@@ -27,9 +26,11 @@ const runTranscription = async () => {
   try {
     const { filePath, tempPath } = workerData;
 
+    // 🔥 FIX CRÍTICO: Importación dinámica para esquivar el error de "ES Module no soportado"
+    const transformers = await import('@xenova/transformers');
+    const pipeline = transformers.pipeline || transformers.default.pipeline;
+
     // 1. CARGA DEL MODELO MEJORADO
-    // Cambiamos 'whisper-tiny' por 'whisper-small' para mejor calidad.
-    // 'quantized: true' hace que sea rápido aunque el modelo sea más grande.
     const transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-small', {
       quantized: true 
     });
@@ -44,18 +45,19 @@ const runTranscription = async () => {
     const audioData = wav.getSamples();
     const input = Array.isArray(audioData) ? audioData[0] : audioData;
 
-    // 4. Transcribir (chunk_length_s ayuda a procesar audios largos sin trabarse)
+    // 4. Transcribir
     const output = await transcriber(input, {
       language: 'spanish',
       task: 'transcribe',
-      chunk_length_s: 30, // Procesa de a 30 segundos para no saturar la memoria
-      stride_length_s: 5
+      chunk_length_s: 30, 
+      stride_length_s: 5,
+      return_timestamps: false 
     });
 
     // 5. Enviar resultado y borrar temporal
     if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
     
-    parentPort.postMessage({ success: true, text: output.text });
+    parentPort.postMessage({ success: true, text: output.text.trim() });
 
   } catch (error) {
     parentPort.postMessage({ success: false, error: error.message });

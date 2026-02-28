@@ -153,6 +153,14 @@ body {
   font-family: 'Inter', sans-serif;
   transition: all 0.3s ease;
   min-width: 140px; 
+  /* FIX BUG CLICKS FANTASMA */
+  -webkit-app-region: no-drag !important;
+  -webkit-user-select: auto !important;
+  user-select: auto !important;
+  position: relative;
+  z-index: 100;
+  cursor: text !important;
+  pointer-events: auto !important;
 }
 
 .header-input:focus { 
@@ -203,6 +211,9 @@ input[type="date"].header-input:hover {
   backdrop-filter: blur(4px);
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* FIX BUG CLICKS FANTASMA */
+  -webkit-app-region: no-drag !important;
+  z-index: 100;
 }
 .header-btn:active { transform: scale(0.96); }
 .header-btn:hover {
@@ -305,10 +316,23 @@ input[type="date"].header-input:hover {
 /* --- MENSAJES --- */
 .messages-area {
   flex: 1;
-  overflow-y: auto; overflow-x: hidden;
+  overflow-y: auto; 
+  overflow-x: hidden !important;
   padding: 20px;
   display: flex; flex-direction: column; gap: 15px;
   width: 100%; box-sizing: border-box;
+  /* Fondo base un poquito más oscuro que los menús para dar profundidad */
+  background-color: #0b1120 !important; 
+  
+  /* Patrón Cyber: Una matriz de puntos finos y una cuadrícula macro */
+  background-image: 
+    radial-gradient(circle at center, rgba(56, 189, 248, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  
+  /* Tamaños del patrón: Puntos cada 15px, Cuadrícula cada 75px */
+  background-size: 15px 15px, 75px 75px, 75px 75px;
+
 }
 
 .date-separator {
@@ -318,25 +342,53 @@ input[type="date"].header-input:hover {
 }
 
 .message-bubble {
-  max-width: 60%; padding: 10px 14px;
-  border-radius: 12px; position: relative;
-  font-size: 14px; line-height: 1.5;
+  max-width: 70%;
+  width: fit-content;
+  padding: 10px 14px;
+  margin-bottom: 12px !important;
+  border-radius: 12px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.5;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .message-bubble.received {
   background-color: var(--bubble-received);
-  border-bottom-left-radius: 2px; align-self: flex-start;
+  border-bottom-left-radius: 2px;
+  align-self: flex-start;
+  margin-right: auto;
+  margin-left: 15px;
   border: 1px solid rgba(255,255,255,0.05);
 }
 
 .message-bubble.sent {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: white; border-bottom-right-radius: 2px; align-self: flex-end;
+  /* 1. Mismo fondo oscuro que los mensajes recibidos */
+  background: #1e293b;
+  color: #f8fafc;
+  
+  /* 2. Borde sutil celeste para diferenciarlo como "Enviado" */
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  
+  /* 3. Tus propiedades originales de diseño y posición (Intactas) */
+  border-bottom-right-radius: 2px;
+  align-self: flex-end;
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+.message-bubble audio {
+  max-width: 100%;
 }
 
 .msg-sender { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
-.msg-time { font-size: 10px; opacity: 0.7; float: right; margin: 5px 0 0 8px; }
+.msg-time { font-size: 10px; opacity: 0.7; align-self: flex-end; margin: 5px 0 0 8px; }
 
 /* Evidencia & Highlight */
 .evidence-flag {
@@ -498,6 +550,7 @@ input[type="date"].header-input:hover {
     padding: 8px 12px !important; margin-bottom: 12px !important; border-radius: 12px !important;
     box-shadow: none !important; page-break-inside: avoid !important; display: block !important;
     font-size: 11px !important; line-height: 1.4 !important;
+    word-wrap: break-word !important; overflow-wrap: break-word !important; word-break: break-word !important; white-space: pre-wrap !important;
   }
 
   .message-bubble.sent {
@@ -510,7 +563,7 @@ input[type="date"].header-input:hover {
   }
 
   .message-bubble.received {
-    align-self: flex-start !important; margin-right: auto !important;
+    align-self: flex-start !important; margin-right: auto !important; margin-left: 0 !important;
     background-color: #ffffff !important; border: 1px solid #e2e8f0 !important; color: black !important;
     border-top-left-radius: 0 !important;
   }
